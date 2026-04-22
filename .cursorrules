@@ -1,0 +1,19 @@
+# Reglas de Proyecto: LyG Indumentaria Deportiva / MundoSport
+
+## 1. Idioma y Formatos
+- **Interfaz:** 100% en Español (Botones, Modales, Placeholders).
+- **Código:** Evitar el "Spanglish". Si una entidad se nombra en español en el backend, se mantiene en español en el frontend.
+- **Moneda:** Formatear siempre los precios para Argentina (e.g., $ 1.500,00).
+
+## 2. Componentes UI (Prioridad Alta)
+- **Cero Alertas:** Prohibido `window.alert`. Usar el componente de Ventana Modal existente.
+- **Feedback:** Todo proceso de "Guardar", "Eliminar" o "Error de API" debe disparar una modal de confirmación o éxito.
+- **Estilo:** Minimalismo nórdico, superficies limpias, paleta neutra.
+
+## 3. Lógica de Negocio
+- **Seguridad:** Respetar la validación de la Llave Maestra (Gad33224122) en el panel administrativo.
+- **Backend:** Usar FastAPI con SQLAlchemy. Las migraciones deben considerar que la DB es SQLite en entorno Docker.
+
+## 4. Contexto de Infraestructura
+- El proyecto se despliega vía Dokploy/Hostinger. 
+- Mantener la configuración de Dockerfile y docker-compose actualizada ante nuevos cambios de dependencias.

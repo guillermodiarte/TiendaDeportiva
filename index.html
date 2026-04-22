@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee2b5b",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221015",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Athletica | Performance Sportswear</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 md:px-20 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">bolt</span>
+<h2 class="text-slate-900 dark:text-slate-100 text-2xl font-black leading-tight tracking-tighter italic">ATHLETICA</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-slate-700 dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors" href="#">New Arrivals</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors" href="#">Collections</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors" href="#">Our Story</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 md:gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-slate-200/50 dark:bg-slate-800/50">
+<div class="text-slate-500 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:ring-0 text-sm font-medium placeholder:text-slate-500 px-2" placeholder="Find your fit..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-full h-10 w-10 bg-slate-200/50 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100 hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="flex items-center justify-center rounded-full h-10 w-10 bg-slate-200/50 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100 hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="lg:hidden flex items-center justify-center rounded-full h-10 w-10 bg-slate-200/50 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex flex-col flex-1">
+<!-- Hero Section -->
+<section class="px-4 md:px-10 py-6">
+<div class="relative min-h-[600px] w-full flex flex-col items-start justify-end overflow-hidden rounded-3xl p-8 md:p-16">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Strong female athlete training in urban setting" style="background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0cxK746v83ROJL7hs8CnHSC06y6FO_5BKKIjT17wYw5iCb8ERHKzIaDlv-Dh0C0xP_Xg7bv0hXxYqiJEcv2ISnb5GrrEIMFmlutU99JtFdOlebmD1X719ZSdiRC_pM5a_Qr9CF1MAPjtCAkFYPhz-auhf_zoyn6Rl4DmWoS8qt6C2dV6KaY8kXQzWUu4Ebnv4i0_-w4wUJ2cPMIGYzcWqZdCiShlsecf-MJriGEfBEV14OmFlIloeItI3stHip3RrRDu6PTuOG10');">
+</div>
+<div class="relative z-10 max-w-2xl flex flex-col gap-6">
+<div class="flex flex-col gap-3">
+<span class="text-primary font-bold tracking-widest uppercase text-sm">New Season 2024</span>
+<h1 class="text-white text-5xl md:text-7xl font-black leading-[1.1] tracking-tighter">
+                                    POWER IN <br/><span class="text-primary italic text-6xl md:ext-8xl">MOTION</span>
+</h1>
+<p class="text-slate-200 text-lg md:text-xl font-medium max-w-lg leading-relaxed">
+                                    Engineered for elite performance. High-impact gear that moves with you, supports you, and empowers every stride.
+                                </p>
+</div>
+<div class="flex flex-wrap gap-4">
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-full h-14 px-8 bg-primary text-white text-base font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/30">
+                                    Shop Performance
+                                </button>
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-full h-14 px-8 bg-white/10 backdrop-blur-md border border-white/20 text-white text-base font-bold hover:bg-white/20 transition-all">
+                                    Watch Film
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Categories -->
+<section class="px-4 md:px-20 py-12">
+<div class="flex items-end justify-between mb-10">
+<div class="flex flex-col gap-2">
+<h2 class="text-slate-900 dark:text-white text-3xl font-extrabold tracking-tight">Shop by Category</h2>
+<div class="h-1 w-20 bg-primary rounded-full"></div>
+</div>
+<a class="text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all" href="#">
+                            View All <span class="material-symbols-outlined">trending_flat</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Category 1 -->
+<div class="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Close up of high quality leggings" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvT2uCk1UIUIHS8kB0cnUTmgfnzG7RfWbhgLEfCgMfP7KmSULsUDHiYAYkYV4P0l3rFY3XYUjl9O2tLCeS6H0wluKDBnA96-yDIUeD_CS1g7LTQlFUv8j8Cm84Oo2__qZD67HGCYM-YdMuhPyATBYXHG4ZkP7Ik-wusZE1oZmlE-ZV2bGIv8ykh6DqHMXjb_vDsCv7ZbEMbcUKMzysylxA_l69aRnZ5bl7iDiB0Eo_zYd7dYar_lhQi31C4r558wHgTinHzrbcw0c');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<h3 class="text-white text-2xl font-bold mb-2">Leggings</h3>
+<p class="text-slate-300 text-sm mb-4">Compression &amp; Comfort</p>
+<span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-slate-900 group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</span>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Woman wearing athletic sports top" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPoIdLrl2BW1plNYBKTAQPYhjosb882hogTs5Av75AHEb_bX6mx3f0kEGGhDb3rqetc_VPiCIVI0qgauy_Qw5IgrVh4IQ1f63Nq_FCurQv0Uzyyrm2gv8IhTo8_rb76RU55fIzM5J4VfX7WiSjKz7a2CUmzOQ9i10rkYjll9hbrBv_qn6YoYOKrp3w5DBz_y-jX1IxBhdHPqgLSYg2Jg9gmr-h4-UiePk_zQ1FWkW3cUXXHV88eQThhfM7GbmN59doJ__RR8ovNE4');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<h3 class="text-white text-2xl font-bold mb-2">Performance Tops</h3>
+<p class="text-slate-300 text-sm mb-4">Breathable &amp; Lightweight</p>
+<span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-slate-900 group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</span>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Athletic accessories and socks" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsrPBt8ItQ8kj9pfrz4UTg4CtlHXIgJdqeXYnoAGHusls7tLvh_VYnGn_TQ1-A0OdbiaIE81CUIZTW7IOySIOqwibdzoe-xXA7Xh6f-KZSuAbwV_ZzYxdulkjqigyUyCUQ2kl1Xh_TFJHvJD2vgFKT9LjGFwU1Rrn2UCP98A4fHl64gS0GzN7TTfBFxg_5aa8yFeHdjvuLe1QGpqQ3FORNUuqPsbh4W0AcBbZRGwnbaWcdiygkcxYNDVBKLltStvQqB-y9GANvPUk');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<h3 class="text-white text-2xl font-bold mb-2">Socks &amp; Gear</h3>
+<p class="text-slate-300 text-sm mb-4">Essential Support</p>
+<span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-slate-900 group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Latest Arrivals -->
+<section class="px-4 md:px-20 py-16 bg-white dark:bg-slate-900/40">
+<div class="max-w-[1400px] mx-auto">
+<div class="flex flex-col items-center text-center mb-12">
+<span class="text-primary font-bold tracking-widest uppercase text-xs mb-2">The Drop</span>
+<h2 class="text-slate-900 dark:text-white text-4xl font-black tracking-tight mb-4">Latest Arrivals</h2>
+<p class="text-slate-500 max-w-md">Our freshest styles just landed. Experience the next generation of athletic apparel.</p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+<!-- Product 1 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+<img alt="Aero-Dry Leggings" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Steel grey high-waisted performance leggings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2joFBI5X0kEPhfS9BUeH6jAO5h2gmnMo3U1ZgAF4CPk-4gdxLAw_vxspvOBg1w-eC5tE0gk1vMD4rrtNWCj4YOpspoI6FXBoCo0bFoXO5W2x7bQoIWda4I2THdklRAXe82JKyD6_Lk2NT72o8xOikPHrQAHMfzJycbH4tqjt6At_QAEhMETQ3TUbHjSQs9JxrAIxvxZSFjOEVfQBowpCtUJ-vKSlMkv_IlAiIIGUB5jes7P_fNqTZBWTFXjy8t3lHv-l2kb4ZpnU"/>
+<div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-black px-2 py-1 rounded uppercase tracking-wider">New</div>
+<button class="absolute bottom-4 right-4 h-10 w-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Aero-Dry Leggings</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Carbon Black</p>
+<p class="text-primary font-black mt-1">$84.00</p>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+<img alt="Velocity Crop Top" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Light pink athletic crop top for running" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD15jTbCjQUJ9nPeBgeg5NteHhFo9zNkOZZEFdb90LKrEAKYas4uVPGJm09Oj_C87eiWuDtLk5sXkwCtfSzH7xwihbYag9OecEfigqj8f1FJhGodGSakouZvrjl3Gskd9mLsnXVJpN3HyEumjEH6jUc_IeFP-Pu4Va7d4P_vLBwE3JSofy91xmIMGzLaC4f-w4WSqA5gJ_YMOUxVDEA8PN4bvjdoQa6atOMTzI525wqHE-o-nX_D6XkOasU4rpDzyADU7bhtni8Y4"/>
+<button class="absolute bottom-4 right-4 h-10 w-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Velocity Crop Top</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Rose Quartz</p>
+<p class="text-primary font-black mt-1">$52.00</p>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+<img alt="Zen Flow Shorts" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Deep blue flexible yoga shorts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9HreyRoT5gB2JL36rNvsroVE4ylxbZvJwNrXPLoVfm3fNWvY14uWyBqphgVn0lY2V0wn7eVdybqVPeC41ogVgCzGC0ZPCumhZPDIkfFg3qnCTWsPsidQ0ZudeJNeJDg36BRD8IZyOF2aNrX08sOLrlwPPoBnaXBAF_KrvAfzdsgL4VPjtMkJQV7dGiPjepQGzVHgYVdupMPlpVztRWcB_9ZnHAJzUWSOfLDjkC05eeiodjbpBCYRZxA0Ywph07MxQLX_UCQX3cNY"/>
+<button class="absolute bottom-4 right-4 h-10 w-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Zen Flow Shorts</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Midnight Navy</p>
+<p class="text-primary font-black mt-1">$48.00</p>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="flex flex-col gap-4 group">
+<div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+<img alt="Impact Sports Bra" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="High support sports bra in white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvIK-0rKPy4r4HZUUUSldIf4kNzLWeACLW5HbLT5roRQDeUY3pS9bRlZakp4VwaUX0Ryw_8IwabGHjowSt1QhmLiU1UGRm-GnxstfHoTYqUJnn0tySv8CyfuEOSKEIBA4I78-4gBAj06QSFawEMzcIzVZbdOLYjJEzBAKHRPUjesEyBCyo5A3kOluUzaGM8DEi5QAWYMwcb66tMYIgpf-8uB9CljNKPRoG1dpf5LZ_7VzOYkrCYWk1DAebRut2PPWPnbzDdmbJTEY"/>
+<button class="absolute bottom-4 right-4 h-10 w-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-slate-900 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Impact Sports Bra</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Arctic White</p>
+<p class="text-primary font-black mt-1">$65.00</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quality/Features Banner -->
+<section class="px-4 md:px-20 py-20">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+<div class="flex flex-col items-center gap-4">
+<div class="size-16 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">air</span>
+</div>
+<h3 class="text-xl font-bold">Climate Control</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Advanced fabrics that wick moisture and keep you cool during peak intensity.</p>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="size-16 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">all_inclusive</span>
+</div>
+<h3 class="text-xl font-bold">Infinite Stretch</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Four-way stretch technology for total freedom of movement in every direction.</p>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="size-16 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">eco</span>
+</div>
+<h3 class="text-xl font-bold">Sustainable Force</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Made with recycled ocean plastics, combining performance with planet care.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-900 text-white px-6 md:px-20 pt-16 pb-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">bolt</span>
+<h2 class="text-white text-2xl font-black italic tracking-tighter">ATHLETICA</h2>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed">
+                            Empowering women through innovative design and uncompromising performance since 2018.
+                        </p>
+<div class="flex gap-4">
+<a class="h-10 w-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-primary hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-lg">share</span>
+</a>
+<a class="h-10 w-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-primary hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-lg">Shop</h4>
+<ul class="flex flex-col gap-4 text-slate-400 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Best Sellers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Leggings &amp; Tights</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sports Bras</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Accessories</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-lg">Help</h4>
+<ul class="flex flex-col gap-4 text-slate-400 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Shipping Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Returns &amp; Exchanges</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Size Guide</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-lg">Join the Club</h4>
+<p class="text-slate-400 text-sm mb-4">Subscribe to receive updates, access to exclusive deals, and more.</p>
+<div class="flex h-12 bg-slate-800 rounded-lg overflow-hidden p-1">
+<input class="bg-transparent border-none flex-1 focus:ring-0 text-sm px-3" placeholder="Email address" type="email"/>
+<button class="bg-primary text-white font-bold px-4 rounded-md text-sm">Join</button>
+</div>
+</div>
+</div>
+<div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
+<p>© 2024 ATHLETICA Performance. All rights reserved.</p>
+<div class="flex gap-8">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-white transition-colors" href="#">Cookie Settings</a>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>
