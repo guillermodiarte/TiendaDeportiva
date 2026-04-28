@@ -113,15 +113,18 @@ export default function ProductosView({ showAlert }: { showAlert: (msg: string) 
   const updateProduct = useStockFlowStore(s => s.updateProduct);
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedMainCategory, setSelectedMainCategory] = useState<string>('Todo');
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>('Todo');
   
   // Modals state
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [editForm, setEditForm] = useState({ name: '', sku: '', purchasePrice: 0, salePrice: 0 });
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  const toggleExpand = (id: string) => {
-    // Left just in case they click something, but cards are pre-expanded
-  };
+  useEffect(() => {
+    // Reset subcategory when main category changes
+    setSelectedSubCategory('Todo');
+  }, [selectedMainCategory]);
 
   const getGrupoByCategory = (cat: string) => {
       for(let g of CATEGORIAS_DEPORTIVAS) {
@@ -130,17 +133,25 @@ export default function ProductosView({ showAlert }: { showAlert: (msg: string) 
       return 'Otros (Sin Asignar)';
   };
 
-  const filteredProducts = products.filter(p => 
-    p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    p.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.categoryId.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = products.filter(p => {
+    const matchesSearch = 
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      p.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.categoryId.toLowerCase().includes(searchQuery.toLowerCase());
+      
+    if (!matchesSearch) return false;
 
-  const groupedProducts = filteredProducts.reduce((acc, current) => {
-    const grupo = getGrupoByCategory(current.categoryId);
-    (acc[grupo] = acc[grupo] || []).push(current);
-    return acc;
-  }, {} as Record<string, typeof products>);
+    const grupo = getGrupoByCategory(p.categoryId);
+    const matchesMain = selectedMainCategory === 'Todo' || grupo === selectedMainCategory;
+    const matchesSub = selectedSubCategory === 'Todo' || p.categoryId === selectedSubCategory;
+
+    return matchesMain && matchesSub;
+  });
+
+  const mainCategories = ['Todo', ...CATEGORIAS_DEPORTIVAS.map(c => c.grupo)];
+  const subCategories = selectedMainCategory === 'Todo' 
+      ? ['Todo'] 
+      : ['Todo', ...(CATEGORIAS_DEPORTIVAS.find(c => c.grupo === selectedMainCategory)?.opciones || [])];
 
   const handleEditClick = (p: Product) => {
       setEditingProduct(p);
@@ -166,108 +177,146 @@ export default function ProductosView({ showAlert }: { showAlert: (msg: string) 
   return (
     <div className="space-y-8 pb-10">
       
-      {/* Search Header */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-3">
-            <span className="material-symbols-outlined text-primary text-3xl">inventory_2</span>
-            Inventario de Tienda
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Busca productos, visualiza el stock de sus variantes por categoría y aplicales CRUD.</p>
+      {/* Filters Header */}
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 flex flex-col gap-5">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-3">
+                <span className="material-symbols-outlined text-primary text-3xl">inventory_2</span>
+                Inventario de Tienda
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 mt-1">Busca y filtra productos dinámicamente.</p>
+            </div>
+            <div className="relative w-full md:w-96 flex-shrink-0">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                <input 
+                  type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Buscar Nombre, SKU o Subcategoría"
+                  className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-medium focus:ring-2 focus:ring-primary outline-none dark:text-white transition-all"
+                />
+            </div>
         </div>
-        <div className="relative w-full md:w-96">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-            <input 
-              type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar Nombre, SKU o Subcategoría"
-              className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl font-medium focus:ring-2 focus:ring-primary outline-none dark:text-white transition-all"
-            />
+
+        {/* Dynamic Selectors */}
+        <div className="flex flex-col md:flex-row gap-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+            <div className="w-full md:w-1/2">
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5 ml-1">Categoría Principal</label>
+                <div className="relative">
+                    <select 
+                        value={selectedMainCategory} 
+                        onChange={e => setSelectedMainCategory(e.target.value)}
+                        className="w-full appearance-none !bg-none bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-xl px-4 pr-10 py-3 font-bold outline-none focus:ring-2 focus:ring-primary transition-all cursor-pointer"
+                    >
+                        {mainCategories.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                    <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                </div>
+            </div>
+            <div className="w-full md:w-1/2">
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5 ml-1">Subcategoría</label>
+                <div className="relative">
+                    <select 
+                        value={selectedSubCategory} 
+                        onChange={e => setSelectedSubCategory(e.target.value)}
+                        disabled={selectedMainCategory === 'Todo'}
+                        className={`w-full appearance-none !bg-none border rounded-xl px-4 pr-10 py-3 font-bold outline-none transition-all ${
+                            selectedMainCategory === 'Todo' 
+                            ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400 cursor-not-allowed' 
+                            : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary cursor-pointer'
+                        }`}
+                    >
+                        {subCategories.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                    <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                </div>
+            </div>
         </div>
       </div>
 
-      {Object.keys(groupedProducts).length === 0 ? (
+      {filteredProducts.length === 0 ? (
           <div className="text-center py-20 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
               <span className="material-symbols-outlined text-6xl text-slate-300">search_off</span>
-              <p className="text-slate-500 font-bold mt-4">No se encontraron productos.</p>
+              <p className="text-slate-500 font-bold mt-4">No se encontraron productos con estos filtros.</p>
           </div>
       ) : (
-          Object.entries(groupedProducts).map(([grupo, prods]) => (
-            <div key={grupo} className="mb-10">
-                <h3 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-3 border-b border-slate-200 dark:border-slate-700 pb-3">
-                    <div className="size-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                        <span className="material-symbols-outlined text-sm">sell</span>
-                    </div>
-                    {grupo}
-                    <span className="ml-auto text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">{prods.length} Productos</span>
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                   {prods.map(p => {
-                        const totalStock = p.variants.reduce((acc, v) => acc + v.stock, 0);
-                        return (
-                            <div key={p.id} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col group relative animate-in fade-in zoom-in-95 duration-500">
-                               {/* Action Buttons */}
-                               <div className="absolute top-4 right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-white/80 dark:bg-slate-800/80 backdrop-blur rounded-full p-1 border border-slate-100 dark:border-slate-700">
-                                   <button onClick={() => handleEditClick(p)} className="size-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-blue-50 hover:text-blue-500 transition-colors">
-                                       <span className="material-symbols-outlined text-sm">edit</span>
-                                   </button>
-                                   <button onClick={() => setConfirmDeleteId(p.id)} className="size-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors">
-                                       <span className="material-symbols-outlined text-sm">delete</span>
-                                   </button>
-                               </div>
-                               
-                               <ProductGallery urls={p.imageUrls || []} name={p.name} />
-                               
-                               <div className="p-5 flex-1 flex flex-col">
-                                    <div className="text-[10px] font-black text-primary mb-1 uppercase tracking-wider bg-primary/10 inline-block px-2 py-0.5 rounded mr-auto">{p.categoryId}</div>
-                                    <h4 className="text-lg font-black text-slate-900 dark:text-white leading-tight pr-14 mt-1">{p.name}</h4>
-                                    <div className="text-xs text-slate-400 font-mono mt-1 mb-4">{p.sku}</div>
-                                    
-                                    <div className="flex gap-4">
-                                         <div>
-                                             <p className="text-[10px] text-slate-400 font-bold uppercase mb-0.5">P. Compra</p>
-                                             <p className="text-sm font-medium text-slate-600 dark:text-slate-300">${p.purchasePrice}</p>
-                                         </div>
-                                         <div>
-                                             <p className="text-[10px] text-slate-400 font-bold uppercase mb-0.5">P. Venta</p>
-                                             <p className="text-sm font-black text-slate-900 dark:text-white">${p.salePrice}</p>
-                                         </div>
-                                    </div>
-                                    
-                                    <div className="mt-auto pt-4 flex flex-col">
-                                        <div className="flex items-center justify-between mb-3 border-t border-slate-100 dark:border-slate-700 pt-3">
-                                            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">Stock / Variantes</p>
-                                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${totalStock > 0 ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}>{totalStock > 0 ? `${totalStock} Disp.` : 'Agotado'}</span>
-                                        </div>
-                                        <div className="flex flex-wrap gap-2">
-                                            {p.variants.map(v => (
-                                                <div key={v.id} className="flex flex-col flex-1 min-w-[60px] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-center">
-                                                    <div className="flex justify-center items-center gap-1 mb-1">
-                                                        <div className="size-2 rounded-full border border-slate-300 dark:border-slate-600" style={{backgroundColor: v.color === 'Negro' ? '#0f172a' : v.color === 'Blanco' ? '#ffffff' : v.color === 'Rosa' ? '#f43f5e' : '#cbd5e1'}}></div>
-                                                        <span 
-                                                            className="text-[10px] font-bold text-slate-500 cursor-help"
-                                                            title={(v.size.includes('MER:') || v.size.includes('ARG:') || v.size.includes('INT:')) ? v.size : undefined}
-                                                        >
-                                                            {v.size.includes('MER:') ? v.size.split(' ')[0].replace('MER:', 'T:') : 
-                                                             v.size.includes('ARG:') ? v.size.split(' ')[0].replace('ARG:', 'T:') : 
-                                                             v.size.includes('INT:') ? v.size.split(' ')[0].replace('INT:', 'T:') : v.size}
-                                                        </span>
-                                                    </div>
-                                                    <span className={`text-sm font-black ${v.stock > 0 ? 'text-primary' : 'text-red-500'}`}>{v.stock}</span>
-                                                </div>
-                                            ))}
-                                            {p.variants.length === 0 && (
-                                                <div className="w-full text-center text-xs text-slate-400 italic py-2">Sin variantes. Usa Ingreso Mercadería.</div>
-                                            )}
-                                        </div>
-                                    </div>
-                               </div>
+          <div className="animate-in fade-in duration-500">
+             <div className="flex items-center justify-between mb-4 px-2">
+                 <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300">
+                     Resultados para <span className="text-primary">{selectedSubCategory !== 'Todo' ? selectedSubCategory : selectedMainCategory}</span>
+                 </h3>
+                 <span className="text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">{filteredProducts.length} Productos</span>
+             </div>
+             
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredProducts.map(p => {
+                     const totalStock = p.variants.reduce((acc, v) => acc + v.stock, 0);
+                     return (
+                         <div key={p.id} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col group relative animate-in fade-in zoom-in-95 duration-500">
+                            {/* Action Buttons */}
+                            <div className="absolute top-4 right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-white/80 dark:bg-slate-800/80 backdrop-blur rounded-full p-1 border border-slate-100 dark:border-slate-700">
+                                <button onClick={() => handleEditClick(p)} className="size-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-blue-50 hover:text-blue-500 transition-colors">
+                                    <span className="material-symbols-outlined text-sm">edit</span>
+                                </button>
+                                <button onClick={() => setConfirmDeleteId(p.id)} className="size-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-red-50 hover:text-red-500 transition-colors">
+                                    <span className="material-symbols-outlined text-sm">delete</span>
+                                </button>
                             </div>
-                        );
-                   })}
-                </div>
-            </div>
-          ))
+                            
+                            <ProductGallery urls={p.imageUrls || []} name={p.name} />
+                            
+                            <div className="p-5 flex-1 flex flex-col">
+                                 <div className="text-[10px] font-black text-primary mb-1 uppercase tracking-wider bg-primary/10 inline-block px-2 py-0.5 rounded mr-auto">{p.categoryId}</div>
+                                 <h4 className="text-lg font-black text-slate-900 dark:text-white leading-tight pr-14 mt-1">{p.name}</h4>
+                                 <div className="text-xs text-slate-400 font-mono mt-1 mb-4">{p.sku}</div>
+                                 
+                                 <div className="flex gap-4">
+                                      <div>
+                                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-0.5">P. Compra</p>
+                                          <p className="text-sm font-medium text-slate-600 dark:text-slate-300">${p.purchasePrice}</p>
+                                      </div>
+                                      <div>
+                                          <p className="text-[10px] text-slate-400 font-bold uppercase mb-0.5">P. Venta</p>
+                                          <p className="text-sm font-black text-slate-900 dark:text-white">${p.salePrice}</p>
+                                      </div>
+                                 </div>
+                                 
+                                 <div className="mt-auto pt-4 flex flex-col">
+                                     <div className="flex items-center justify-between mb-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                                         <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">Stock / Variantes</p>
+                                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${totalStock > 0 ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}>{totalStock > 0 ? `${totalStock} Disp.` : 'Agotado'}</span>
+                                     </div>
+                                     <div className="flex flex-wrap gap-2">
+                                         {p.variants.map(v => (
+                                             <div key={v.id} className="flex flex-col flex-1 min-w-[60px] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-center">
+                                                 <div className="flex justify-center items-center gap-1 mb-1">
+                                                     <div className="size-2 rounded-full border border-slate-300 dark:border-slate-600" style={{backgroundColor: v.color === 'Negro' ? '#0f172a' : v.color === 'Blanco' ? '#ffffff' : v.color === 'Rosa' ? '#f43f5e' : '#cbd5e1'}}></div>
+                                                     <span 
+                                                         className="text-[10px] font-bold text-slate-500 cursor-help"
+                                                         title={(v.size.includes('MER:') || v.size.includes('ARG:') || v.size.includes('INT:')) ? v.size : undefined}
+                                                     >
+                                                         {v.size.includes('MER:') ? v.size.split(' ')[0].replace('MER:', 'T:') : 
+                                                          v.size.includes('ARG:') ? v.size.split(' ')[0].replace('ARG:', 'T:') : 
+                                                          v.size.includes('INT:') ? v.size.split(' ')[0].replace('INT:', 'T:') : v.size}
+                                                     </span>
+                                                 </div>
+                                                 <span className={`text-sm font-black ${v.stock > 0 ? 'text-primary' : 'text-red-500'}`}>{v.stock}</span>
+                                             </div>
+                                         ))}
+                                         {p.variants.length === 0 && (
+                                             <div className="w-full text-center text-xs text-slate-400 italic py-2">Sin variantes. Usa Ingreso Mercadería.</div>
+                                         )}
+                                     </div>
+                                 </div>
+                            </div>
+                         </div>
+                     );
+                })}
+             </div>
+          </div>
       )}
 
       {/* Delete Confirmation Modal */}
