@@ -18,7 +18,6 @@ export default function AdminDashboard() {
   const [activeView, setActiveView] = useState<'products'|'sections'|'compras'|'ventas'|'users'|'finanzas'|'media'|'configuracion'>('products');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showAddForm, setShowAddForm] = useState(false);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showAddPassword, setShowAddPassword] = useState(false);
   const [newUserRole, setNewUserRole] = useState('editor');
@@ -43,15 +42,6 @@ export default function AdminDashboard() {
   const [mediaCategories, setMediaCategories] = useState<string[]>([]);
   const [selectedMediaCategory, setSelectedMediaCategory] = useState<string>('');
   const [mediaSearch, setMediaSearch] = useState('');
-  // Form State
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const [size, setSize] = useState('M');
-  const [stock, setStock] = useState('10');
-  const [sku, setSku] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
@@ -197,63 +187,6 @@ export default function AdminDashboard() {
       }
     } catch(e) {
       showAlert("Falla de red.");
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!name || !price || !categoryId || !sku) return showAlert("Faltan campos requeridos");
-
-    try {
-      let uploadedUrl = "";
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append("file", imageFile);
-        
-        const uploadRes = await fetch(`${API_URL}/api/admin/upload`, {
-          method: 'POST',
-          headers: { 'X-API-KEY': apiKey },
-          body: formData
-        });
-        
-        if (uploadRes.ok) {
-          const ud = await uploadRes.json();
-          uploadedUrl = ud.url;
-        } else {
-          showAlert("Error subiendo la imagen");
-          return;
-        }
-      }
-
-      const res = await fetch(`${API_URL}/api/admin/products`, {
-        method: 'POST',
-        headers: { 
-          'X-API-KEY': apiKey, 
-          'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify({
-          name,
-          description: description || "Descripción genérica...",
-          price: parseFloat(price),
-          category_id: parseInt(categoryId),
-          sku,
-          size,
-          stock: parseInt(stock),
-          image_url: uploadedUrl
-        })
-      });
-
-      if (res.ok) {
-        showAlert("Producto creado con éxito");
-        setShowAddForm(false);
-        fetchProducts();
-        setName(''); setPrice(''); setSku(''); setImageFile(null);
-      } else {
-        showAlert("Error creando producto");
-      }
-    } catch(e) {
-      showAlert("Falla de red procesando la solicitud.");
     }
   };
 
@@ -461,42 +394,42 @@ export default function AdminDashboard() {
         <nav className="flex-1 px-4 py-2 space-y-2 overflow-y-auto">
           <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-3 mb-4 mt-2">Menú Principal</div>
           
-          <button onClick={() => {setShowAddForm(false); setActiveView('products');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'products' ? 'bg-primary/20 text-primary border border-primary/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('products')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'products' ? 'bg-primary/20 text-primary border border-primary/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">grid_view</span>
             <span>Productos</span>
           </button>
           
-          <button onClick={() => {setShowAddForm(false); setActiveView('sections');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'sections' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('sections')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'sections' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">web</span>
             <span>Secciones</span>
           </button>
 
-          <button onClick={() => {setShowAddForm(false); setActiveView('compras');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'compras' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('compras')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'compras' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">local_shipping</span>
             <span>Compras</span>
           </button>
 
-          <button onClick={() => {setShowAddForm(false); setActiveView('ventas');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'ventas' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('ventas')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'ventas' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">receipt_long</span>
             <span>Ventas</span>
           </button>
 
-          <button onClick={() => {setShowAddForm(false); setActiveView('users');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'users' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('users')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'users' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">group</span>
             <span>Usuarios</span>
           </button>
 
-          <button onClick={() => {setShowAddForm(false); setActiveView('finanzas');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'finanzas' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('finanzas')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'finanzas' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">payments</span>
             <span>Finanzas</span>
           </button>
 
-          <button onClick={() => {setShowAddForm(false); setActiveView('media');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'media' ? 'bg-[#00f8ff] text-slate-900 shadow-lg shadow-[#00f8ff]/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('media')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'media' ? 'bg-[#00f8ff] text-slate-900 shadow-lg shadow-[#00f8ff]/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">folder_special</span>
             <span>Biblioteca</span>
           </button>
 
-          <button onClick={() => {setShowAddForm(false); setActiveView('configuracion');}} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${!showAddForm && activeView === 'configuracion' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
+          <button onClick={() => setActiveView('configuracion')} className={`flex w-full text-left items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${activeView === 'configuracion' ? 'bg-primary/10 text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'}`}>
             <span className="material-symbols-outlined">settings</span>
             <span>Configuración</span>
           </button>
@@ -534,66 +467,12 @@ export default function AdminDashboard() {
               <input className="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary/20 focus:bg-white dark:focus:bg-slate-900 transition-all text-sm outline-none" placeholder="Buscar productos, detalles, o categorías..." type="text"/>
             </div>
           </div>
-          <div className="flex items-center gap-4 ml-8">
-            <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white font-bold text-sm rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20" onClick={() => setShowAddForm(true)}>
-              <span className="material-symbols-outlined text-[20px]">add</span>
-              <span className="hidden sm:inline">Nuevo</span>
-            </button>
-          </div>
         </header>
 
         {/* Content Section */}
         <div className="flex-1 overflow-y-auto p-8 bg-background-light dark:bg-background-dark/30">
           
-          {showAddForm ? (
-            <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-8 max-w-4xl mx-auto">
-               <h2 className="text-2xl font-black mb-6 dark:text-white tracking-tight">Agregar Prenda al Catálogo</h2>
-               <form onSubmit={handleSubmit} className="space-y-6">
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div>
-                     <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Nombre del Producto</label>
-                     <input type="text" required value={name} onChange={e=>setName(e.target.value)} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-none rounded-xl focus:ring-2 focus:ring-primary outline-none dark:text-white" />
-                   </div>
-                   <div>
-                     <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Precio Total (ARS)</label>
-                     <input type="number" step="0.01" required value={price} onChange={e=>setPrice(e.target.value)} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-none rounded-xl focus:ring-2 focus:ring-primary outline-none dark:text-white" />
-                   </div>
-                 </div>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div>
-                     <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">SKU Base</label>
-                     <input type="text" required value={sku} onChange={e=>setSku(e.target.value)} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-none rounded-xl focus:ring-2 focus:ring-primary outline-none dark:text-white uppercase" placeholder="Ej: LYG-TOP-S"/>
-                   </div>
-                   <div>
-                     <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Categoría Principal</label>
-                     <select required value={categoryId} onChange={e=>setCategoryId(e.target.value)} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border-none rounded-xl focus:ring-2 focus:ring-primary outline-none text-slate-800 dark:text-white">
-                       <option value="">Selecciona...</option>
-                       {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                     </select>
-                   </div>
-                 </div>
-                 <div>
-                   <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Imagen Representativa</label>
-                   <div className="flex items-center justify-center w-full">
-                      <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-slate-300 dark:border-slate-600 border-dashed rounded-xl cursor-pointer bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6 text-slate-500">
-                              <span className="material-symbols-outlined text-4xl mb-2">cloud_upload</span>
-                              <p className="mb-2 text-sm"><span className="font-bold">Click para subir</span> o arrastra y suelta</p>
-                              <p className="text-xs">{imageFile ? imageFile.name : 'PNG, JPG o WEBP'}</p>
-                          </div>
-                          <input type="file" className="hidden" accept="image/*" onChange={e=> setImageFile(e.target.files?.[0] || null)} />
-                      </label>
-                  </div>
-                 </div>
-                 <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800 flex justify-end">
-                     <button type="submit" className="px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 flex items-center gap-2 shadow-lg shadow-primary/20 transition-all">
-                      <span className="material-symbols-outlined">save</span> Guardar Producto
-                     </button>
-                 </div>
-               </form>
-            </div>
-          ) : (
-            <>
+          <>
               {activeView === 'products' ? (
                  <div className="max-w-7xl mx-auto w-full"><ProductosView showAlert={showAlert} /></div>
               ) : activeView === 'sections' ? (
@@ -866,8 +745,6 @@ export default function AdminDashboard() {
               </div>
               ) : null}
             </>
-          )}
-
         </div>
       </main>
 

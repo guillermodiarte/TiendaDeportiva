@@ -1,19 +1,39 @@
-# Reglas de Proyecto: LyG Indumentaria Deportiva / MundoSport
+# Reglas Críticas de Proyecto: LyG Indumentaria Deportiva / MundoSport
 
-## 1. Idioma y Formatos
-- **Interfaz:** 100% en Español (Botones, Modales, Placeholders).
-- **Código:** Evitar el "Spanglish". Si una entidad se nombra en español en el backend, se mantiene en español en el frontend.
-- **Moneda:** Formatear siempre los precios para Argentina (e.g., $ 1.500,00).
+## 1. Idioma, Formatos y Localización
+- **Interfaz (UI):** 100% en Español. Esto incluye Botones, Modales, Placeholders, Tooltips y mensajes de carga.
+- **Consistencia de Naming:** Evitar el "Spanglish". Si una entidad se nombra en español en el backend (ej. `producto_id`), se mantiene exactamente igual en el frontend.
+- **Moneda y Fechas:** Formatear siempre los precios para Argentina (e.g., $ 1.500,00) y las fechas en formato DD/MM/AAAA.
 
-## 2. Componentes UI (Prioridad Alta)
-- **Cero Alertas:** Prohibido `window.alert`. Usar el componente de Ventana Modal existente.
-- **Feedback:** Todo proceso de "Guardar", "Eliminar" o "Error de API" debe disparar una modal de confirmación o éxito.
-- **Estilo:** Minimalismo nórdico, superficies limpias, paleta neutra.
+## 2. Componentes de UI y Experiencia de Usuario (UX)
+- **Prohibición de Alertas:** Está terminantemente prohibido usar `window.alert()`, `confirm()` o `prompt()`.
+- **Uso de Modales:** Toda interacción (éxito, error, confirmación) debe realizarse mediante ventanas modales. 
+- **Ciclo de Vida:** Tras una operación exitosa (HTTP 200/201), la modal de formulario debe cerrarse y disparar una modal de "Éxito" o un refresco de datos (`router.refresh()`).
+- **Estética:** Seguir estrictamente el minimalismo nórdico: fondos limpios, paleta neutra, tipografía sofisticada y uso generoso de espacios en blanco.
 
-## 3. Lógica de Negocio
-- **Seguridad:** Respetar la validación de la Llave Maestra (Gad33224122) en el panel administrativo.
-- **Backend:** Usar FastAPI con SQLAlchemy. Las migraciones deben considerar que la DB es SQLite en entorno Docker.
+## 3. Minimización de Componentes (Composición sobre Herencia)
+- **No inventar componentes:** No crear nuevos componentes `.tsx` que actúen como wrappers genéricos (e.g., `CustomCard`, `ModalWrapper`).
+- **Prioridad de Librería:** Usar la funcionalidad nativa de `shadcn/ui` o la librería instalada.
+- **Estilo vía Tailwind:** Las personalizaciones deben realizarse inyectando clases de Tailwind o `tailwind-variants` directamente en los componentes de la librería, no creando archivos nuevos.
 
-## 4. Contexto de Infraestructura
-- El proyecto se despliega vía Dokploy/Hostinger. 
-- Mantener la configuración de Dockerfile y docker-compose actualizada ante nuevos cambios de dependencias.
+## 4. Lógica de Backend y Seguridad
+- **Tecnología:** FastAPI con SQLAlchemy y Pydantic.
+- **Llave Maestra:** Respetar la validación de la llave `Gad33224122` para todas las acciones sensibles en el panel administrativo.
+- **Sincronía de Tipos:** Al modificar un `Schema` de Pydantic, actualizar inmediatamente la `interface` o `type` correspondiente en `frontend/src/types`. Prohibido usar `any`.
+
+## 5. Manejo de Errores (Contrato API)
+- **Prohibición:** No devolver el objeto de error crudo de la base de datos (e.g., evitar `detail=str(e)`).
+- **Obligatorio:** Devolver estructuras genéricas y amigables en español.
+- **Estructura de Respuesta:** - `status_code`: HTTP Code.
+  - `detail`: "Mensaje amigable en español."
+  - `data`: `null` (en caso de error).
+
+## 6. Persistencia, Archivos y Docker
+- **Imágenes:** Guardar en el sistema de archivos (carpeta `/uploads`), NUNCA como BLOB en la base de datos. En la DB solo se almacena el string de la ruta o nombre del archivo.
+- **Rutas de Imágenes:** El backend debe devolver rutas que el componente `<img />` de Next.js pueda resolver (ej. `/static/uploads/nombre.jpg`).
+- **Configuración Docker:** - El código debe usar la variable de entorno `STORAGE_PATH` (default `./uploads`) para facilitar el mapeo de volúmenes en Dokploy.
+  - Las migraciones de SQLite deben considerar que el archivo `data.db` reside en un volumen persistente.
+- **Infraestructura:** Mantener compatibilidad con despliegue en VPS Hostinger mediante Dokploy y certificados SSL de Cloudflare.
+
+---
+**Nota para la IA:** Antes de realizar cualquier implementación, verifica que no estás rompiendo ninguna de las reglas de UI o de Idioma mencionadas arriba.
