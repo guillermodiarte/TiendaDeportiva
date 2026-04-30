@@ -292,10 +292,10 @@ export default function ProductosView({ showAlert }: { showAlert: (msg: string) 
                                      <div className="flex flex-wrap gap-2">
                                          {p.variants.map(v => (
                                              <div key={v.id} className="flex flex-col flex-1 min-w-[60px] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-center">
-                                                 <div className="flex justify-center items-center gap-1 mb-1">
-                                                     <div className="size-2 rounded-full border border-slate-300 dark:border-slate-600" style={{backgroundColor: v.color === 'Negro' ? '#0f172a' : v.color === 'Blanco' ? '#ffffff' : v.color === 'Rosa' ? '#f43f5e' : '#cbd5e1'}}></div>
+                                                 <div className="flex flex-col justify-center items-center mb-1">
+                                                     <span className="text-[10px] font-bold text-slate-500 uppercase">{v.color}</span>
                                                      <span 
-                                                         className="text-[10px] font-bold text-slate-500 cursor-help"
+                                                         className="text-xs font-black text-slate-700 dark:text-slate-300 cursor-help"
                                                          title={(v.size.includes('MER:') || v.size.includes('ARG:') || v.size.includes('INT:')) ? v.size : undefined}
                                                      >
                                                          {v.size.includes('MER:') ? v.size.split(' ')[0].replace('MER:', 'T:') : 

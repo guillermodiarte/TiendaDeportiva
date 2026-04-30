@@ -198,38 +198,20 @@ export const useStockFlowStore = create<StockFlowState>()(
             let targetProductName = purchase.newProductName || 'Producto Desconocido';
             let targetVariantId = Math.random().toString(36).substr(2, 9);
 
-            if (purchase.productId === 'NEW') {
-              const existingIndex = updatedProducts.findIndex(p =>
-                  p.name.trim().toLowerCase() === purchase.newProductName!.trim().toLowerCase() ||
-                  (purchase.newProductSku && purchase.newProductSku.trim() !== '' && p.sku === purchase.newProductSku)
-              );
+            if (purchase.productId.startsWith('NEW-')) {
+              const existingIndex = updatedProducts.findIndex(p => p.id === purchase.productId);
 
               if (existingIndex !== -1) {
                   const prod = updatedProducts[existingIndex];
-                  targetProductId = prod.id;
-                  targetProductName = prod.name;
-                  prod.purchasePrice = purchase.unitPurchasePrice;
-                  prod.salePrice = purchase.manualSalePrice;
-                  prod.categoryId = purchase.categoryId;
-                  if (purchase.newProductImageUrls && purchase.newProductImageUrls.length > 0) {
-                      prod.imageUrls = purchase.newProductImageUrls; // server URLs
-                  }
-
-                  const varIndex = prod.variants.findIndex(v => v.size === purchase.size && v.color === purchase.color);
-                  if (varIndex !== -1) {
-                      prod.variants[varIndex].stock += purchase.quantity;
-                      targetVariantId = prod.variants[varIndex].id;
-                  } else {
-                      prod.variants.push({
-                          id: targetVariantId, size: purchase.size, color: purchase.color, stock: purchase.quantity
-                      });
-                  }
+                  // Append variant to the product created in this session
+                  prod.variants.push({
+                      id: targetVariantId, size: purchase.size, color: purchase.color, stock: purchase.quantity
+                  });
               } else {
-                  targetProductId = Math.random().toString(36).substr(2, 9);
                   updatedProducts.push({
-                    id: targetProductId,
+                    id: purchase.productId,
                     name: purchase.newProductName!,
-                    sku: purchase.newProductSku!,
+                    sku: purchase.newProductSku || '',
                     categoryId: purchase.categoryId,
                     imageUrls: purchase.newProductImageUrls || [],
                     purchasePrice: purchase.unitPurchasePrice,
