@@ -15,7 +15,18 @@ export default function AdminDashboard() {
   const [apiKey, setApiKey] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [activeView, setActiveView] = useState<'products'|'sections'|'compras'|'ventas'|'users'|'finanzas'|'media'|'configuracion'>('products');
+  type ViewId = 'products'|'sections'|'compras'|'ventas'|'users'|'finanzas'|'media'|'configuracion';
+  const VALID_VIEWS: ViewId[] = ['products','sections','compras','ventas','users','finanzas','media','configuracion'];
+  const getSavedView = (): ViewId => {
+    if (typeof window === 'undefined') return 'products';
+    const v = localStorage.getItem('lyg_active_view') as ViewId | null;
+    return v && VALID_VIEWS.includes(v) ? v : 'products';
+  };
+  const [activeView, setActiveViewState] = useState<ViewId>('products');
+  const setActiveView = (v: ViewId) => {
+    localStorage.setItem('lyg_active_view', v);
+    setActiveViewState(v);
+  };
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
@@ -46,6 +57,7 @@ export default function AdminDashboard() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
   useEffect(() => {
+    setActiveViewState(getSavedView());
     const saved = localStorage.getItem('lyg_api_key');
     if (saved) {
       verifyToken(saved);
