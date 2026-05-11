@@ -293,7 +293,9 @@ export default function ProductosView({ showAlert }: { showAlert: (msg: string) 
                                          {p.variants.map(v => (
                                              <div key={v.id} className="flex flex-col flex-1 min-w-[60px] bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-center">
                                                  <div className="flex flex-col justify-center items-center mb-1">
-                                                     <span className="text-[10px] font-bold text-slate-500 uppercase">{v.color}</span>
+                                                     {(v as any).description && (
+                                                         <span className="text-[10px] font-bold text-slate-500 truncate max-w-[70px]" title={(v as any).description}>{(v as any).description}</span>
+                                                     )}
                                                      <span 
                                                          className="text-xs font-black text-slate-700 dark:text-slate-300 cursor-help"
                                                          title={(v.size.includes('MER:') || v.size.includes('ARG:') || v.size.includes('INT:')) ? v.size : undefined}

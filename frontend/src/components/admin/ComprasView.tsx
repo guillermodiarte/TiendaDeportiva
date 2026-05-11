@@ -8,7 +8,7 @@ export default function ComprasView({ showAlert, apiKey, apiUrl }: { showAlert: 
     const productsStore = useStockFlowStore(s => s.products);
 
     const createEmptyVariant = () => ({
-        size: 'M', color: 'Negro',
+        size: 'M', description: '',
         quantity: 1, unitPurchasePrice: 0, manualSalePrice: 0, autoCalculated: true,
         shoeMetric: 'MER', shoeSizeIndex: 8,
         inferiorMetric: 'ARG', inferiorSizeIndex: 0,
@@ -74,29 +74,21 @@ export default function ComprasView({ showAlert, apiKey, apiUrl }: { showAlert: 
             return;
         }
         
-        let missingVariant = false;
         const flattenedItems: any[] = [];
 
         products.forEach(p => {
             p.variants.forEach(v => {
-                if (!v.size || !v.color) {
-                    missingVariant = true;
-                }
                 flattenedItems.push({
                     productId: p.productId,
                     newProductName: p.newProductName,
                     newProductSku: p.newProductSku,
                     categoryId: p.categoryId,
                     newProductImageUrls: p.newProductImageUrls,
+                    color: (v as any).description || '',
                     ...v
                 });
             });
         });
-
-        if (missingVariant) {
-            showAlert("Asegúrate de rellenar Talle y Color en todas las variantes.");
-            return;
-        }
 
         const formattedItems = flattenedItems.map(item => {
             const group = CATEGORIAS_DEPORTIVAS.find(g => g.opciones.includes(item.categoryId));
@@ -352,14 +344,14 @@ export default function ComprasView({ showAlert, apiKey, apiUrl }: { showAlert: 
                                             )}
                                         </div>
 
-                                        <div className="w-[120px]">
-                                            <select className="w-full bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-800/50 rounded-lg px-3 py-2 text-sm text-purple-900 dark:text-purple-300 font-bold h-10" value={variant.color} onChange={e => updateVariant(pIdx, vIdx, 'color', e.target.value)}>
-                                                <option value="Negro">Negro</option>
-                                                <option value="Blanco">Blanco</option>
-                                                <option value="Rosa">Rosa</option>
-                                                <option value="Gris">Gris</option>
-                                                <option value="Azul">Azul</option>
-                                            </select>
+                                        <div className="flex-1 min-w-[140px]">
+                                            <input
+                                                type="text"
+                                                placeholder="Descripción (ej: Negro/Rosa)"
+                                                className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white h-10"
+                                                value={(variant as any).description}
+                                                onChange={e => updateVariant(pIdx, vIdx, 'description', e.target.value)}
+                                            />
                                         </div>
 
                                         <div className="w-[80px]">

@@ -611,7 +611,7 @@ export default function AdminDashboard() {
 
                 {/* Grid de Archivos */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                  {mediaFiles.filter(f => f.filename.toLowerCase().includes(mediaSearch.toLowerCase())).map((file, idx) => (
+                  {mediaFiles.filter(f => !f.filename.startsWith('.') && f.filename.toLowerCase().includes(mediaSearch.toLowerCase())).map((file, idx) => (
                      <div key={idx} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden group shadow-sm hover:shadow-md transition-all relative">
                        {/* Preview */}
                        <div className="aspect-square bg-slate-100 dark:bg-slate-900 relative flex items-center justify-center overflow-hidden">

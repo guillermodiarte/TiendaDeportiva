@@ -7,7 +7,7 @@ import Link from 'next/link'
 export default function Home() {
   const [settings, setSettings] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
-  
+
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
   useEffect(() => {
@@ -31,12 +31,12 @@ export default function Home() {
     fetchSettings();
   }, []);
 
-  const banner = settings['home_banner'] || { 
-    title: 'NUEVA TEMPORADA', 
+  const banner = settings['home_banner'] || {
+    title: 'NUEVA TEMPORADA',
     subtitle: 'PODER EN MOVIMIENTO',
-    videoUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuB0cxK746v83ROJL7hs8CnHSC06y6FO_5BKKIjT17wYw5iCb8ERHKzIaDlv-Dh0C0xP_Xg7bv0hXxYqiJEcv2ISnb5GrrEIMFmlutU99JtFdOlebmD1X719ZSdiRC_pM5a_Qr9CF1MAPjtCAkFYPhz-auhf_zoyn6Rl4DmWoS8qt6C2dV6KaY8kXQzWUu4Ebnv4i0_-w4wUJ2cPMIGYzcWqZdCiShlsecf-MJriGEfBEV14OmFlIloeItI3stHip3RrRDu6PTuOG10" 
+    videoUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuB0cxK746v83ROJL7hs8CnHSC06y6FO_5BKKIjT17wYw5iCb8ERHKzIaDlv-Dh0C0xP_Xg7bv0hXxYqiJEcv2ISnb5GrrEIMFmlutU99JtFdOlebmD1X719ZSdiRC_pM5a_Qr9CF1MAPjtCAkFYPhz-auhf_zoyn6Rl4DmWoS8qt6C2dV6KaY8kXQzWUu4Ebnv4i0_-w4wUJ2cPMIGYzcWqZdCiShlsecf-MJriGEfBEV14OmFlIloeItI3stHip3RrRDu6PTuOG10"
   };
-  
+
   const header = settings['site_header'] || {
     logoUrl: "",
     facebookUrl: "#",
@@ -46,7 +46,7 @@ export default function Home() {
 
   const footer = settings['site_footer'] || {
     logoUrl: "",
-    copyRight: "© 2024 LyG Indumentaria Deportiva. Todos los derechos reservados."
+    copyRight: "© 2026 LyG Indumentaria Deportiva. Todos los derechos reservados."
   };
 
   if (loading) return <div className="min-h-screen bg-slate-50 flex items-center justify-center dark:bg-slate-900"><div className="animate-spin text-primary material-symbols-outlined text-4xl">autorenew</div></div>;
@@ -95,8 +95,8 @@ export default function Home() {
         <main className="flex flex-col flex-1">
           {/* Hero Section */}
           <section className="px-4 md:px-10 py-6 relative">
-            
-            <div 
+
+            <div
               className="relative min-h-[600px] w-full flex flex-col items-start justify-end overflow-hidden rounded-3xl p-8 md:p-16"
               style={{
                 backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%), url('${banner.videoUrl}')`,
@@ -109,7 +109,7 @@ export default function Home() {
                 <div className="flex flex-col gap-3">
                   <span className="text-primary font-bold tracking-widest uppercase text-sm">LyG Indumentaria</span>
                   <h1 className="text-white text-5xl md:text-7xl font-black leading-[1.1] tracking-tighter">
-                   {banner.title.toUpperCase()} <br /> <span className="text-primary italic font-serif">{banner.subtitle.toUpperCase()}</span>
+                    {banner.title.toUpperCase()} <br /> <span className="text-primary italic font-serif">{banner.subtitle.toUpperCase()}</span>
                   </h1>
                   <p className="text-slate-200 text-lg md:text-xl font-medium max-w-lg leading-relaxed">
                     Diseñado para el máximo rendimiento. Indumentaria de alto impacto que se mueve con vos, te sostiene y te da poder en cada paso.
@@ -141,8 +141,8 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Category 1 */}
               <Link href="/catalog?category=leggings" className="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer">
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" 
-                     style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvT2uCk1UIUIHS8kB0cnUTmgfnzG7RfWbhgLEfCgMfP7KmSULsUDHiYAYkYV4P0l3rFY3XYUjl9O2tLCeS6H0wluKDBnA96-yDIUeD_CS1g7LTQlFUv8j8Cm84Oo2__qZD67HGCYM-YdMuhPyATBYXHG4ZkP7Ik-wusZE1oZmlE-ZV2bGIv8ykh6DqHMXjb_vDsCv7ZbEMbcUKMzysylxA_l69aRnZ5bl7iDiB0Eo_zYd7dYar_lhQi31C4r558wHgTinHzrbcw0c')" }}></div>
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvT2uCk1UIUIHS8kB0cnUTmgfnzG7RfWbhgLEfCgMfP7KmSULsUDHiYAYkYV4P0l3rFY3XYUjl9O2tLCeS6H0wluKDBnA96-yDIUeD_CS1g7LTQlFUv8j8Cm84Oo2__qZD67HGCYM-YdMuhPyATBYXHG4ZkP7Ik-wusZE1oZmlE-ZV2bGIv8ykh6DqHMXjb_vDsCv7ZbEMbcUKMzysylxA_l69aRnZ5bl7iDiB0Eo_zYd7dYar_lhQi31C4r558wHgTinHzrbcw0c')" }}></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8">
                   <h3 className="text-white text-2xl font-bold mb-2">Calzas Largas</h3>
@@ -154,8 +154,8 @@ export default function Home() {
               </Link>
               {/* Category 2 */}
               <Link href="/catalog?category=tops" className="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer">
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" 
-                     style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPoIdLrl2BW1plNYBKTAQPYhjosb882hogTs5Av75AHEb_bX6mx3f0kEGGhDb3rqetc_VPiCIVI0qgauy_Qw5IgrVh4IQ1f63Nq_FCurQv0Uzyyrm2gv8IhTo8_rb76RU55fIzM5J4VfX7WiSjKz7a2CUmzOQ9i10rkYjll9hbrBv_qn6YoYOKrp3w5DBz_y-jX1IxBhdHPqgLSYg2Jg9gmr-h4-UiePk_zQ1FWkW3cUXXHV88eQThhfM7GbmN59doJ__RR8ovNE4')" }}></div>
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPoIdLrl2BW1plNYBKTAQPYhjosb882hogTs5Av75AHEb_bX6mx3f0kEGGhDb3rqetc_VPiCIVI0qgauy_Qw5IgrVh4IQ1f63Nq_FCurQv0Uzyyrm2gv8IhTo8_rb76RU55fIzM5J4VfX7WiSjKz7a2CUmzOQ9i10rkYjll9hbrBv_qn6YoYOKrp3w5DBz_y-jX1IxBhdHPqgLSYg2Jg9gmr-h4-UiePk_zQ1FWkW3cUXXHV88eQThhfM7GbmN59doJ__RR8ovNE4')" }}></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8">
                   <h3 className="text-white text-2xl font-bold mb-2">Tops Deportivos</h3>
@@ -167,8 +167,8 @@ export default function Home() {
               </Link>
               {/* Category 3 */}
               <Link href="/catalog?category=accessories" className="group relative aspect-[4/5] overflow-hidden rounded-2xl cursor-pointer">
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" 
-                     style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsrPBt8ItQ8kj9pfrz4UTg4CtlHXIgJdqeXYnoAGHusls7tLvh_VYnGn_TQ1-A0OdbiaIE81CUIZTW7IOySIOqwibdzoe-xXA7Xh6f-KZSuAbwV_ZzYxdulkjqigyUyCUQ2kl1Xh_TFJHvJD2vgFKT9LjGFwU1Rrn2UCP98A4fHl64gS0GzN7TTfBFxg_5aa8yFeHdjvuLe1QGpqQ3FORNUuqPsbh4W0AcBbZRGwnbaWcdiygkcxYNDVBKLltStvQqB-y9GANvPUk')" }}></div>
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsrPBt8ItQ8kj9pfrz4UTg4CtlHXIgJdqeXYnoAGHusls7tLvh_VYnGn_TQ1-A0OdbiaIE81CUIZTW7IOySIOqwibdzoe-xXA7Xh6f-KZSuAbwV_ZzYxdulkjqigyUyCUQ2kl1Xh_TFJHvJD2vgFKT9LjGFwU1Rrn2UCP98A4fHl64gS0GzN7TTfBFxg_5aa8yFeHdjvuLe1QGpqQ3FORNUuqPsbh4W0AcBbZRGwnbaWcdiygkcxYNDVBKLltStvQqB-y9GANvPUk')" }}></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-8">
                   <h3 className="text-white text-2xl font-bold mb-2">Bolsos y Accesorios</h3>
@@ -189,7 +189,7 @@ export default function Home() {
                 <h2 className="text-slate-900 dark:text-white text-4xl font-black tracking-tight mb-4">Últimos Ingresos</h2>
                 <p className="text-slate-500 max-w-md">Nuestros estilos más frescos acaban de llegar. Experimenta la próxima generación de ropa deportiva.</p>
               </div>
-              
+
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 {/* Product 1 */}
                 <div className="flex flex-col gap-4 group">
@@ -252,7 +252,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-12 flex justify-center">
                 <Link href="/catalog" className="inline-flex items-center gap-2 font-bold text-primary hover:text-primary/80 transition-colors">
                   Ver colección completa <span className="material-symbols-outlined">arrow_forward</span>
@@ -309,7 +309,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-bold mb-6 text-lg">Tienda</h4>
               <ul className="flex flex-col gap-4 text-slate-400 text-sm">
@@ -319,7 +319,7 @@ export default function Home() {
                 <li><a className="hover:text-primary transition-colors" href="#">Accesorios</a></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-bold mb-6 text-lg">Ayuda</h4>
               <ul className="flex flex-col gap-4 text-slate-400 text-sm">
@@ -329,7 +329,7 @@ export default function Home() {
                 <li><a className="hover:text-primary transition-colors" href="#">Contáctanos</a></li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-bold mb-6 text-lg">Únete al Club</h4>
               <p className="text-slate-400 text-sm mb-4">Suscríbete para recibir novedades, ofertas exclusivas y lanzamientos.</p>
@@ -339,7 +339,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          
+
           <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
             <p>{footer.copyRight}</p>
             <div className="flex gap-8">
