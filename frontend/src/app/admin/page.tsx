@@ -144,6 +144,9 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (apiKey && isAuthenticated) {
       fetchUsers();
+      if (activeView === 'media') {
+        fetchMedia(selectedMediaCategory);
+      }
     }
   }, [apiKey, isAuthenticated, activeView]);
 
